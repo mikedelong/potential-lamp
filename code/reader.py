@@ -42,7 +42,13 @@ for key in dfs.keys():
     logger.debug('data in file %s is %d x %d' % (key, dfs[key].shape[0], dfs[key].shape[1]))
 
 for key in dfs.keys():
-    logger.debug('data in file %s has head \n%s' % (key, dfs[key].head(20)) )
+    logger.debug('data in file %s has head \n%s' % (key, dfs[key].head(20)))
+
+column = settings['column']
+for key in dfs.keys():
+    frame = dfs[key]
+    if column in frame.keys():
+        logger.debug(frame[column].unique())
 logger.debug('done')
 finish_time = time.time()
 elapsed_hours, elapsed_remainder = divmod(finish_time - start_time, 3600)
