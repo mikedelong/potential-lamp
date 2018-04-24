@@ -25,6 +25,8 @@ input_file = settings['input_file']
 full_input_file = input_folder + input_file
 logger.debug('we are reading our data from %s' % full_input_file)
 
+headings = settings['headings']
+logger.debug('we are using headings %s' % headings)
 zip_file = ZipFile(full_input_file)
 logger.debug(zip_file.filelist)
 logger.debug([text_file.filename for text_file in zip_file.infolist()])
@@ -32,6 +34,7 @@ dfs = {
     text_file.filename: pd.read_csv(zip_file.open(text_file.filename),
                                     # nrows=10,
                                     delimiter=';',
+                                    names=headings[text_file.filename],
                                     skiprows=1) for text_file in zip_file.infolist() if
     text_file.filename.endswith('.CSV')}
 
